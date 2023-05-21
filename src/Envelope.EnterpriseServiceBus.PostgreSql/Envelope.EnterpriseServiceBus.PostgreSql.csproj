@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<LangVersion>10.0</LangVersion>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<PackageId>Envelope.EnterpriseServiceBus.PostgreSql</PackageId>
+		<Description>Envelope.EnterpriseServiceBus.PostgreSql</Description>
+		<PackageTags></PackageTags>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+		<PackageReleaseNotes></PackageReleaseNotes>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/envelope-net/envelope-enterpriseservicebus-postgresql</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/envelope-net/envelope-enterpriseservicebus-postgresql</RepositoryUrl>
+		<PackageIcon>envelope_icon.png</PackageIcon>
+		<NeutralLanguage>en</NeutralLanguage>
+		<Copyright>Copyright Envelope</Copyright>
+		<Authors>Tomas Pilat</Authors>
+		<SignAssembly>true</SignAssembly>
+		<AssemblyOriginatorKeyFile>..\..\Envelope.snk</AssemblyOriginatorKeyFile>
+		<Version>1.0.1</Version>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>$(NoWarn);1591</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\..\envelope_icon.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Envelope.EnterpriseServiceBus" Version="1.0.1" />
+		<PackageReference Include="Envelope.Logging.PostgreSql" Version="1.1.10" />
+		<PackageReference Include="Marten" Version="5.11.0" />
+		<PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.4.27">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+</Project>
