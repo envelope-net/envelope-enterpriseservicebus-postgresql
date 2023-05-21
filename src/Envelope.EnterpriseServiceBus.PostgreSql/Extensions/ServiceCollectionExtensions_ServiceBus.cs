@@ -1,4 +1,6 @@
-﻿using Envelope.EnterpriseServiceBus.PostgreSql.Internal;
+﻿using Envelope.EnterpriseServiceBus.PostgreSql;
+using Envelope.EnterpriseServiceBus.PostgreSql.Configuration;
+using Envelope.EnterpriseServiceBus.PostgreSql.Internal;
 using Envelope.EnterpriseServiceBus.PostgreSql.Queries.Internal;
 using Envelope.EnterpriseServiceBus.PostgreSql.Writers.Internal;
 using Envelope.ServiceBus.Queries;
@@ -14,11 +16,15 @@ public static partial class ServiceCollectionExtensions
 {
 	private static readonly string _postgreSqlTransactionDocumentSessionCacheType = typeof(PostgreSqlTransactionDocumentSessionCache).FullName!;
 
-	public static IServiceCollection AddServiceBusPostgreSql(
+	public static IServiceCollection AddEnterpriseServiceBusPostgreSql(
 		this IServiceCollection services,
 		Guid storeKey,
+		Action<PostgreSqlStoreConfigurationBuilder> configure,
 		ServiceLifetime serviceBusReaderLifetime = ServiceLifetime.Scoped)
 	{
+		if (configure == null)
+			throw new ArgumentNullException(nameof(configure));
+
 		services.TryAddTransient<ITransactionCoordinator, TransactionCoordinator>();
 		services.TryAdd(new ServiceDescriptor(typeof(IServiceBusReader), sp => new ServiceBusReader(storeKey), serviceBusReaderLifetime));
 		services.TryAddTransient<IJobMessagePublisher>(sp =>
@@ -34,6 +40,8 @@ public static partial class ServiceCollectionExtensions
 				var store = StoreProvider.GetStore(storeKey);
 				return new PostgreSqlTransactionDocumentSessionCache(store);
 			}));
+
+		services.TryAddSingleton<ConfigureEnterpriseServiceBusDb>(sp => builder => configure.Invoke(builder));
 
 		return services;
 	}
