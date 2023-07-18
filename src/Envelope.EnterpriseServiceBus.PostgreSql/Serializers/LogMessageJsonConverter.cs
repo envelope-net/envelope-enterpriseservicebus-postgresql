@@ -45,6 +45,7 @@ public class LogMessageJsonConverter : Newtonsoft.Json.JsonConverter<ILogMessage
 			var isValidationError = obj.Value<string>(nameof(ILogMessage.IsValidationError));
 
 			var tags = obj[nameof(ILogMessage.Tags)];
+			var disableTransactionRollback = obj.Value<string>(nameof(ILogMessage.DisableTransactionRollback));
 
 			return new DeserializedLogMessage
 			{
@@ -73,6 +74,7 @@ public class LogMessageJsonConverter : Newtonsoft.Json.JsonConverter<ILogMessage
 				DisplayPropertyName = displayPropertyName,
 				IsValidationError = bool.TryParse(isValidationError, out var isValidationErrorBool) ? isValidationErrorBool : isValidationErrorBool,
 				Tags = tags == null ? null : (List<string>)serializer.Deserialize(tags!.CreateReader(), typeof(List<string>))!,
+				DisableTransactionRollback = bool.TryParse(disableTransactionRollback, out var disableTransactionRollbackBool) ? disableTransactionRollbackBool : disableTransactionRollbackBool,
 				TraceInfo = (ITraceInfo)serializer.Deserialize(traceInfo!.CreateReader(), typeof(ITraceInfo))!,
 				//Exception = ?,
 				//IsLogged = true,
